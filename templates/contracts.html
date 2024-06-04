@@ -31,26 +31,30 @@
                 <a style="color: #FF336B" href="{{ url_for('show_hotels') }}">Главная страница</a>
             </div>
             <div style="width: 200px; display: flex; justify-content: space-around;" class="right">
-                <a href="{{ url_for('registration') }}">Зарегистрироваться</a>
+                <a href="http://127.0.0.1:8000/profile/{{ user_id }}">Профиль</a>
             </div>
             <div style="width: 200px; display: flex; justify-content: space-around;" class="right">
-                <a href="{{ url_for('login') }}">Войти</a>
+                <a href="{{ url_for('quit') }}">Выйти</a>
             </div>
         </div>
         <br>
+        <div>
+            {{ none_label }}
+        </div>
         {% block body %}
             <div class="row">
-                {% for hotel in result %}
+                {% for book in result %}
                 <div class="col-3">
                     <div class="card">
                             <div class="card-body">
+                                <form action="/books/{{ book.hotel_id }}" method="post">
                                 <ul class="list-group">
-                                    <a href="/hotel/{{ hotel.id }}">
-                                    <li name="name" class="list-group-item">{{ hotel.name }}</li>
-                                    </a>
-                                    <li name="price_per_night" class="list-group-item">Цена за ночь: {{ hotel.price_per_night }}</li>
-                                    <li name="rate" class="list-group-item">Рейтинг: {{ hotel.rate }}</li>
+                                    <li name="name" class="list-group-item">{{ book.hotel_name }}</li>
+                                    <li name="nights" class="list-group-item">Ночей: {{ book.nights }}</li>
+                                    <li name="total" class="list-group-item">Стоимость: {{ book.total_price }}</li>
                                 </ul>
+                                <button type="submit">Удалить</button>
+                                </form>
                             </div>
                         <br>
                     </div>

@@ -22,6 +22,7 @@ class Contract(SQLModel, table=True):
     id: Optional[int] = Field(primary_key=True, default=None)
     user_id: int
     hotel_id: int
+    hotel_name: str
     nights: int
     total_price: int
 

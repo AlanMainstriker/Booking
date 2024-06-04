@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Описание отеля</h1>
+        <p>Название: {{ hotel_name }}</p>
+        <p>Страна: {{ hotel_country }}</p>
+        <p>Город: {{ hotel_town }}</p>
+        <p>Рейтинг: {{ rate }}</p>
+        <p>Цена за ночь: {{ price }}</p>
+        <form method="post">
+        <label for="nights">Количество ночей:</label>
+        <input class="form-control" name="nights" type="number" id="nights" min="1" max="999" value="1">
+        <button type="submit">Забронировать отель</button>
+        </form>
+    </div>
+
+</body>
+</html>

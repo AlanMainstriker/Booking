@@ -31,10 +31,13 @@
                 <a style="color: #FF336B" href="{{ url_for('show_hotels') }}">Главная страница</a>
             </div>
             <div style="width: 200px; display: flex; justify-content: space-around;" class="right">
-                <a href="{{ url_for('registration') }}">Зарегистрироваться</a>
+                <a href="http://127.0.0.1:8000/profile/{{ user_id }}">Профиль</a>
             </div>
             <div style="width: 200px; display: flex; justify-content: space-around;" class="right">
-                <a href="{{ url_for('login') }}">Войти</a>
+                <a href="{{ url_for('get_contracts') }}">Договоры</a>
+            </div>
+            <div style="width: 200px; display: flex; justify-content: space-around;" class="right">
+                <a href="{{ url_for('quit') }}">Выйти</a>
             </div>
         </div>
         <br>
@@ -52,6 +55,12 @@
                                     <li name="rate" class="list-group-item">Рейтинг: {{ hotel.rate }}</li>
                                 </ul>
                             </div>
+                        <div class="d-grid gap-2 col-2 mx-3">
+                            <form action="/hotel/{{ hotel.id }}">
+                                <button>Забронировать</button>
+                            </form>
+
+                        </div>
                         <br>
                     </div>
                     <br>
@@ -59,6 +68,9 @@
                 {% endfor %}
             </div>
             {% endblock %}
+        <label>
+            {{ failed }}
+        </label>
     </div>
 </body>
 </html>
