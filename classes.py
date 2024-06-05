@@ -26,3 +26,6 @@ class Contract(SQLModel, table=True):
     nights: int
     total_price: int
 
+
+class Current(SQLModel, table=True):
+    id: Optional[int] = Field(primary_key=True, default=None)

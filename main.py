@@ -14,11 +14,18 @@ session = Session(bind=engine)
 
 statement = select(Hotel)
 answer = session.exec(statement).all()
-if answer == None:
+if answer == []:
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
 
-CURRENT_USER = None
+ustatement = select(Current)
+result = session.exec(ustatement).all()
+info = result[0].id
+print(info)
+if info == 0:
+    CURRENT_USER = None
+else:
+    CURRENT_USER = info
 
 
 @app.get('/', response_model=Hotel, tags=['Pages'])
@@ -82,8 +89,10 @@ async def register(request: Request, firstname: str = Form(...),
 
 
 @app.get('/profile/{user_id}', response_model=User, tags=['User'])
-async def profile(request: Request):
+async def profile(request: Request, user_id: int):
     global CURRENT_USER
+    if CURRENT_USER == None:
+        return RedirectResponse('/')
     statement = select(User).where(User.id == CURRENT_USER)
     result = session.exec(statement).all()
     fn = result[0].first_name
@@ -214,6 +223,12 @@ async def login_user(request: Request, email: str = Form(...),
                                           context={'failed_message': 'Неверный логин или пароль'})
     if result[0].email == email and result[0].password == password:
         CURRENT_USER = result[0].id
+        statement1 = select(Current)
+        result1 = session.exec(statement1).one()
+        result1.id = CURRENT_USER
+        session.add(result1)
+        session.commit()
+        session.refresh(result1)
         print(CURRENT_USER)
         return templates.TemplateResponse(
             request=request,
@@ -229,5 +244,11 @@ async def login_user(request: Request, email: str = Form(...),
 async def quit(request: Request):
     global CURRENT_USER
     CURRENT_USER = None
+    statement = select(Current)
+    result = session.exec(statement).one()
+    result.id = 0
+    session.add(result)
+    session.commit()
+    session.refresh(result)
     return RedirectResponse('/')
 
